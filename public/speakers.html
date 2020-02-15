@@ -1,256 +1,389 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        margin: 0;
-        font-family: "Lato", sans-serif;
-        background-color: beige;
-      }
 
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Lato", sans-serif;
+      background-color: beige;
+    }
+
+    .avatar-upload {
+      position: relative;
+      max-width: 205px;
+      margin: 50px auto;
+    }
+
+    .avatar-upload .avatar-edit {
+      position: absolute;
+      right: 12px;
+      z-index: 1;
+      top: 10px;
+    }
+
+    .avatar-upload .avatar-edit input {
+      display: none;
+    }
+
+    .avatar-upload .avatar-edit label {
+      display: inline-block;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 0;
+      border-radius: 100%;
+      background: #FFFFFF;
+      border: 1px solid transparent;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      font-weight: normal;
+      transition: all .2s ease-in-out;
+    }
+
+    .avatar-upload .avatar-edit:hover {
+      background: #f1f1f1;
+      border-color: #d6d6d6;
+    }
+
+    .avatar-upload .avatar-edit:after {
+      content: "\f040";
+      font-family: 'FontAwesome';
+      color: #757575;
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
+    }
+
+
+
+    .avatar-preview {
+      width: 192px;
+      height: 192px;
+      position: relative;
+      border-radius: 100%;
+      border: 6px solid #F8F8F8;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar-preview div {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+
+    .sidebar {
+      margin: 0;
+      padding: 0;
+      width: 200px;
+      background-color: #555;
+      position: absolute;
+      float: left;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .sidebar a {
+      display: block;
+      color: black;
+      padding: 16px;
+      text-decoration: none;
+    }
+
+    .sidebar a.active {
+      background-color: cadetblue;
+      color: white;
+    }
+
+    .sidebar a:hover:not(.active) {
+      background-color: #555;
+      color: white;
+    }
+
+    .content {
+      margin-left: 200px;
+      height: 100%;
+      position: absolute;
+    }
+
+    @media screen and (max-width: 700px) {
       .sidebar {
-        margin: 0;
-        padding: 0;
-        width: 200px;
-        background-color:#555;
-        position: absolute;
-        float: left;
+        width: 100%;
         height: 100%;
-        overflow: auto;
+        position: relative;
       }
-      
+
       .sidebar a {
-        display: block;
-        color: black;
-        padding: 16px;
-        text-decoration: none;
-      }
-
-      .sidebar a.active {
-        background-color: cadetblue;
-        color: white;
-      }
-
-      .sidebar a:hover:not(.active) {
-        background-color: #555;
-        color: white;
-      }
-
-      .content {
-        margin-left: 200px;
-        height: 100%;
-        position: absolute;
-      }
-
-      @media screen and (max-width: 700px) {
-        .sidebar {
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-        .sidebar a {
-          float: left;
-        }
-        
-      }
-
-      @media screen and (max-width: 400px) {
-        .sidebar a {
-          text-align: center;
-          float: none;
-        }
-      }
-      .header {
-        overflow: hidden;
-        background-color:#555;
-        padding: 20px 10px;
-      }
-
-      .header a {
         float: left;
-        color: black;
+      }
+
+    }
+
+    @media screen and (max-width: 400px) {
+      .sidebar a {
         text-align: center;
-        padding: 12px;
-        text-decoration: none;
-        font-size: 18px;
-        line-height: 25px;
-        border-radius: 4px;
+        float: none;
       }
+    }
 
-      .header a.logo {
-        font-size: 25px;
-        font-weight: bold;
-      }
+    .header {
+      overflow: hidden;
+      background-color: #555;
+      padding: 20px 10px;
+    }
 
-      .header a:hover {
-        background-color: #ddd;
-        color: black;
-      }
+    .header a {
+      float: left;
+      color: black;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 25px;
+      border-radius: 4px;
+    }
 
-      .header a.active {
-        background-color: dodgerblue;
-        color: white;
+    .header a.logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .header a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .header a.active {
+      background-color: dodgerblue;
+      color: white;
+    }
+
+    .header-right {
+      float: right;
+    }
+
+    @media screen and (max-width: 500px) {
+      .header a {
+        float: none;
+        display: block;
+        text-align: left;
       }
 
       .header-right {
-        float: right;
+        float: none;
       }
+    }
 
-      @media screen and (max-width: 500px) {
-        .header a {
-          float: none;
-          display: block;
-          text-align: left;
-        }
+    .subnav {
+      float: left;
+      overflow: hidden;
+    }
 
-        .header-right {
-          float: none;
-        }
-      }
-      .subnav {
-        float: left;
-        overflow: hidden;
-      }
+    .subnav .subnavbtn {
+      font-size: 20px;
+      border: none;
+      outline: none;
+      color: black;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
 
-      .subnav .subnavbtn {
-        font-size: 20px;
-        border: none;
-        outline: none;
-        color: black;
-        padding: 14px 16px;
-        background-color: inherit;
-        font-family: inherit;
-        margin: 0;
-      }
+    .subnav-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
 
-      .subnav-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
+    .subnav-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
 
-      .subnav-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
+    .subnav-content a:hover {
+      background-color: #ddd;
+    }
 
-      .subnav-content a:hover {
-        background-color: #ddd;
-      }
+    .subnav:hover .subnav-content {
+      display: grid;
+    }
 
-      .subnav:hover .subnav-content {
-        display: grid;
-      }
+    .subnav:hover .subnavbtn {
+      background-color: cadetblue;
+    }
 
-      .subnav:hover .subnavbtn {
-        background-color: cadetblue;
-      }
+    .wrapper {
+      display: flex;
+    }
 
-      .wrapper{
-        display: flex;
-      }
-      .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 50px;
-        background-color: slategray;
-        color: white;
-        text-align: center;
-      }
-      #speakers {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  margin-left: inherit;
-  margin-top: 3rem;
-}
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 50px;
+      background-color: slategray;
+      color: white;
+      text-align: center;
+    }
 
-#speakers td, #speakers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
+    #speakers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      margin-left: inherit;
+      margin-top: 3rem;
+    }
 
-#speakers tr:nth-child(even){background-color: #f2f2f2;}
+    #speakers td,
+    #speakers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
 
-#speakers tr:hover {background-color: #ddd;}
+    #speakers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
 
-#speakers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: rgb(87, 74, 160);
-  color: white;
-}
-#speakers button{
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 10px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  align-self: inherit;
-  outline: none;
-  color: #fff;
-  background-color: rgb(75, 111, 141);
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 5px #999;
-}
-#speakers button:hover {background-color:rgb(62, 116, 160)}
+    #speakers tr:hover {
+      background-color: #ddd;
+    }
 
-#speakers button:active {
-  background-color:rgb(62, 116, 160);
-  box-shadow: 0 3px #666;
-  transform: translateY(2px);
-}
-      
-    </style>
-  </head>
-  <body>
-    <div class="header">
-      <a href="#default" class="logo">CompanyLogo</a>
-      <div class="header-right">
-        <div class="subnav">
-          <button class="subnavbtn">
-            About <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="subnav-content">
-            <a href="#company">Company</a>
-            <a href="#team">Team</a>
-            <a href="#careers">Careers</a>
-          </div>
+    #speakers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: rgb(98, 93, 124);
+      color: white;
+    }
+
+    #speakers button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 10px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      align-self: inherit;
+      outline: none;
+      color: #fff;
+      background-color: rgb(71, 86, 99);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px #999;
+    }
+
+    #speakers button:hover {
+      background-color: rgb(62, 116, 160)
+    }
+
+    #speakers button:active {
+      background-color: rgb(62, 116, 160);
+      box-shadow: 0 3px #666;
+      transform: translateY(2px);
+    }
+
+    input[type=text],
+    input[type=date],
+    textarea {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    input[type=time] {
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
+
+
+    /* Add a background color when the inputs get focus */
+    input[type=text]:focus,
+    input[type=date]:focus,
+    input[type=time]:focus,
+    textarea:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+    .spkbtn{
+      margin-top: 3rem;
+      margin-left: 3rem;
+      width: 50%;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      align-self: inherit;
+      outline: none;
+      color: #fff;
+      background-color: rgb(71, 86, 99);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px #999;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <a href="#default" class="logo">CompanyLogo</a>
+    <div class="header-right">
+      <div class="subnav">
+        <button class="subnavbtn">
+          About <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="subnav-content">
+          <a href="#company">Company</a>
+          <a href="#team">Team</a>
+          <a href="#careers">Careers</a>
         </div>
-        <div class="subnav">
-          <button class="subnavbtn">
-            Services <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="subnav-content">
-            <a href="#bring">Bring</a>
-            <a href="#deliver">Deliver</a>
-            <a href="#package">Package</a>
-            <a href="#express">Express</a>
-          </div>
+      </div>
+      <div class="subnav">
+        <button class="subnavbtn">
+          Services <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="subnav-content">
+          <a href="#bring">Bring</a>
+          <a href="#deliver">Deliver</a>
+          <a href="#package">Package</a>
+          <a href="#express">Express</a>
         </div>
-        <div class="subnav">
-          <button class="subnavbtn">
-            User <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="subnav-content">
-            <a href="#link1">Logout</a>
-            <a href="#link2">Update Password</a>
-          </div>
+      </div>
+      <div class="subnav">
+        <button class="subnavbtn">
+          User <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="subnav-content">
+          <a href="#link1">Logout</a>
+          <a href="#link2">Update Password</a>
         </div>
       </div>
     </div>
-    <div class="wrapper">
+  </div>
+  <div class="wrapper">
     <div class="sidebar">
       <a class="active" href="#home">Home</a>
       <a href="#news">Speakers</a>
@@ -259,88 +392,163 @@
     </div>
 
     <div class="content">
+      <button type="button" class="spkbtn" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Add New Speaker</button>
       <table id="speakers">
+        <thead class="thead-dark">
         <tr>
           <th>Name</th>
           <th>Email</th>
           <th>Title</th>
         </tr>
+      </thead>
         <tr>
           <td>Alfreds Futterkiste</td>
           <td>Maria Anders</td>
           <td>Germany</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Berglunds snabbköp</td>
           <td>Christina Berglund</td>
           <td>Sweden</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Centro comercial Moctezuma</td>
           <td>Francisco Chang</td>
           <td>Mexico</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Ernst Handel</td>
           <td>Roland Mendel</td>
           <td>Austria</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Island Trading</td>
           <td>Helen Bennett</td>
           <td>UK</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Königlich Essen</td>
           <td>Philip Cramer</td>
           <td>Germany</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Laughing Bacchus Winecellars</td>
           <td>Yoshi Tannamuri</td>
           <td>Canada</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Magazzini Alimentari Riuniti</td>
           <td>Giovanni Rovelli</td>
           <td>Italy</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>North/South</td>
           <td>Simon Crowther</td>
           <td>UK</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
         <tr>
           <td>Paris spécialités</td>
           <td>Marie Bertrand</td>
           <td>France</td>
-          <td><button id="button">Update</button> </td>
+          <td><button id="button" data-toggle="modal" data-target="#myModal">Update</button> </td>
           <td><button id="button">Delete</button> </td>
         </tr>
       </table>
+      
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Speaker Information</h4>
+            </div>
+            <div class="modal-body">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                  <label for="imageUpload"></label>
+                </div>
+                <div class="avatar-preview">
+                  <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                  </div>
+                </div>
+              </div>
+
+              <label for="event"><b>Speaker Name</b></label>
+              <input type="text" placeholder="Enter Speaker Name" name="speaker" required>
+
+
+              <label for="title"><b>Title Name</b></label>
+              <input type="text" placeholder="Enter Title of speaker" name="title" required>
+
+              <label for="comapany"><b>Comapany Name</b></label>
+              <input type="text" placeholder="Enter Company name of speaker" name="company" required>
+              <label for="bio"><b>Bio</b></label>
+              <textarea id="bio" placeholder="Type bio here!" rows="4" cols="50"></textarea>
+              <label for="room"><b>Room Number</b></label>
+              <input type="text" placeholder="Enter Room Number" name="room" required>
+              <label for="topic"><b>Topic Title</b></label>
+              <input type="text" placeholder="Enter Topic Title" name="room" required>
+              <label for="desc"><b>Description of Topic</b></label>
+              <textarea id="desc" placeholder="Short description of topic" rows="4" cols="50"></textarea>
+              <label for="appt">Select a time slot:</label><br />
+              <input type="time" id="appt" name="appt"> <label for="appt">to</label> <input type="time" id="appt"
+                name="appt"><br />
+              <label for="link"><b>Web Link</b></label>
+              <input type="text" placeholder="Copy url here" name="link" required>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-  <div class="footer">
-      <p>Posted by: Hege Refsnes</p>
-      <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
   </div>
-  </body>
+  <div class="footer">
+    <p>Posted by: Hege Refsnes</p>
+    <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
+  </div>
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+          $('#imagePreview').hide();
+          $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#imageUpload").change(function () {
+      readURL(this);
+    }); 
+  </script>
+</body>
+
 </html>
